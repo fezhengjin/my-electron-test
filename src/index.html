@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div id="text"></div>
+    <script>
+      (function(){
+        const box = document.getElementById("text");
+
+        require('electron').ipcRenderer.on('ping', (event, message) => {
+          var node = document.createElement("div");
+          var textnode = document.createTextNode(message);
+          node.appendChild(textnode);
+          box.appendChild(node);
+        })
+      })()
+    </script>
+  </body>
+</html>
