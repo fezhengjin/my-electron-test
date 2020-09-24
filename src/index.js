@@ -61,7 +61,7 @@ app.on('activate', () => {
 
 function startDownload() {
   pool = workerpool.pool(__dirname + '/download.js', {
-    maxWorkers: 16,
+    maxWorkers: 20,
     workerType: 'thread'
   });
   const Bucket = 'bucket-zj';
@@ -103,7 +103,7 @@ function startDownload() {
 
 function startUpload() {
   pool = workerpool.pool(__dirname + '/upload.js', {
-    maxWorkers: 16,
+    maxWorkers: 20,
     workerType: 'thread'
   });
   
