@@ -26,12 +26,14 @@ const createWindow = () => {
 
   // Open the DevTools.
   const pool = workerpool.pool(__dirname + '/worker.js', {
-    minWorkers: 10,
+    maxWorkers: 16,
+    workerType: 'thread'
   });
-  const Bucket = 'test-bucket';
+  const Bucket = 'bucket-zj';
   
   s3.listObjects({
     Bucket,
+    Prefix: 'test',
   }, function(err, data) {
     if (err) console.log(err, err.stack);
     else downloadFiles(data);
@@ -40,10 +42,10 @@ const createWindow = () => {
   const tmpdir = os.tmpdir();
   
   function downloadFiles(data) {
-    const datetime = new Date().toISOString().slice(0, 19);
+    const datetime = new Date().toISOString().slice(0, 19).replaceAll(':', '-');
     const dirname = path.join(tmpdir, 'eqs-' + datetime);
     fs.mkdirSync(dirname)
-    mainWindow.webContents.send('ping', dirname);
+    //mainWindow.webContents.send('ping', dirname);
   
     // const interval = setInterval(function() {
     //   console.log(pool.stats());
@@ -58,7 +60,7 @@ const createWindow = () => {
       .then(filepath => {
         const time = new Date().toISOString().slice(0, 19);
         const log = `[${time}] ${filepath}`;
-        mainWindow.webContents.send('ping', log);
+        //mainWindow.webContents.send('ping', log);
       })
       .catch(err => {})
   }

@@ -13,11 +13,12 @@ function download(file, folder) {
       resolve(filepath);
     } else {
       s3.getObject({
-        Bucket: 'test-bucket',
+        Bucket: 'bucket-zj',
         Key: file,
       }, function(err, data) {
         if (err) reject(err);
         else {
+          // resolve(filepath);
           fs.writeFile(filepath, data.Body, err => {
             if (err) reject(err);
             else resolve(filepath);
